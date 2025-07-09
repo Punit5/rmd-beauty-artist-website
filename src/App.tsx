@@ -1,4 +1,5 @@
 import React from 'react';
+import { trackFormSubmission, trackPhoneCall, trackEmailClick, trackBookingClick } from './utils/analytics';
 import EnhancedNavigation from './components/EnhancedNavigation';
 import EnhancedHero from './components/EnhancedHero';
 import EnhancedPortfolio from './components/EnhancedPortfolio';
@@ -76,6 +77,7 @@ function App() {
                 <button
                   type="submit"
                   style={{ padding: '0.75rem', backgroundColor: '#E8B4B8', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 500, fontSize: '1rem' }}
+                  onClick={() => trackFormSubmission('contact_form')}
                 >
                   Send Message
                 </button>
@@ -92,14 +94,14 @@ function App() {
                     <span style={{ fontSize: '1.2rem' }}>📞</span>
                     <div>
                       <p style={{ fontWeight: 500, color: '#333', margin: 0 }}>Phone</p>
-                      <a href="tel:555-123-4567" style={{ color: '#E8B4B8', textDecoration: 'none' }}>(555) 123-4567</a>
+                      <a href="tel:555-123-4567" style={{ color: '#E8B4B8', textDecoration: 'none' }} onClick={() => trackPhoneCall()}>(555) 123-4567</a>
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <span style={{ fontSize: '1.2rem' }}>✉️</span>
                     <div>
                       <p style={{ fontWeight: 500, color: '#333', margin: 0 }}>Email</p>
-                      <a href="mailto:hello@rmdstudios.ca" style={{ color: '#E8B4B8', textDecoration: 'none' }}>hello@rmdstudios.ca</a>
+                      <a href="mailto:hello@rmdstudios.ca" style={{ color: '#E8B4B8', textDecoration: 'none' }} onClick={() => trackEmailClick()}>hello@rmdstudios.ca</a>
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -126,7 +128,10 @@ function App() {
                 <p style={{ color: '#666', marginBottom: '1rem' }}>
                   Ready to book? Schedule your consultation directly.
                 </p>
-                <button style={{ width: '100%', padding: '0.75rem', backgroundColor: '#E8B4B8', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 500 }}>
+                <button 
+                  style={{ width: '100%', padding: '0.75rem', backgroundColor: '#E8B4B8', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 500 }}
+                  onClick={() => trackBookingClick('consultation_button')}
+                >
                   Schedule Consultation
                 </button>
                 
@@ -171,7 +176,10 @@ function App() {
       {/* Mobile Booking Button - Calendar Style */}
       <button
         className="mobile-fixed-button"
-        onClick={scrollToContact}
+        onClick={() => {
+          trackBookingClick('mobile_fixed_button');
+          scrollToContact();
+        }}
         style={{
           position: 'fixed',
           bottom: '20px',

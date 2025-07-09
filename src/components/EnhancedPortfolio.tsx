@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { trackPortfolioView } from '../utils/analytics';
 
 interface ImageData {
   id: number;
@@ -392,7 +393,10 @@ const EnhancedPortfolio: React.FC = () => {
                 transform: 'translateY(0)',
                 transition: `all 0.8s ease-out ${index * 0.1}s`,
               }}
-              onClick={() => handleImageClick(image)}
+              onClick={() => {
+                trackPortfolioView(image.category, image.id);
+                setSelectedImage(image);
+              }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
                 e.currentTarget.style.boxShadow = '0 20px 40px rgba(0,0,0,0.2)';

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { trackNavigation, trackBookingClick } from '../utils/analytics';
 
 const EnhancedNavigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -190,6 +191,9 @@ const EnhancedNavigation: React.FC = () => {
   };
 
   const handleLinkClick = (sectionId: string) => {
+    // Track navigation click
+    trackNavigation(sectionId);
+    
     if (sectionId === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
@@ -251,7 +255,10 @@ const EnhancedNavigation: React.FC = () => {
             padding: '8px 16px',
             gap: '8px'
           }}
-          onClick={() => handleLinkClick('contact')}
+          onClick={() => {
+            trackBookingClick('header_button');
+            handleLinkClick('contact');
+          }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
             e.currentTarget.style.boxShadow = '0 8px 25px rgba(232, 180, 184, 0.6)';
