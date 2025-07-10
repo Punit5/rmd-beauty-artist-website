@@ -217,7 +217,7 @@ const EnhancedNavigation: React.FC = () => {
   return (
     <nav style={navStyle}>
       <div style={containerStyle}>
-        {/* Logo Section - Fixed width */}
+        {/* Logo Section */}
         <div style={{ 
           flex: '0 0 160px',
           display: 'flex',
@@ -229,7 +229,7 @@ const EnhancedNavigation: React.FC = () => {
           </a>
         </div>
         
-        {/* Center Navigation - Flexible */}
+        {/* Center Navigation - Desktop only */}
         <div className="desktop-nav" style={{ 
           flex: '1 1 auto',
           display: 'flex', 
@@ -267,7 +267,7 @@ const EnhancedNavigation: React.FC = () => {
           </ul>
         </div>
         
-        {/* Right Side - Book Button - Fixed width */}
+        {/* Right Side - Book Button - Desktop only */}
         <div className="book-button-desktop" style={{ 
           flex: '0 0 120px',
           display: 'flex',
@@ -317,24 +317,41 @@ const EnhancedNavigation: React.FC = () => {
         </button>
         </div>
 
-        <button 
-          className="mobile-menu-button"
-          style={mobileMenuButtonStyle}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(232, 180, 184, 0.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'none';
-          }}
-        >
-          {isMobileMenuOpen ? '✕' : '☰'}
-        </button>
+        {/* Mobile Menu Button - positioned on far right */}
+        <div className="mobile-menu-button" style={{
+          flex: '0 0 auto',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end'
+        }}>
+          <button 
+            style={mobileMenuButtonStyle}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(232, 180, 184, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'none';
+            }}
+          >
+            {isMobileMenuOpen ? '✕' : '☰'}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
       <div style={mobileMenuStyle}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          {/* Language Toggle in Mobile Menu */}
+          <div style={{ 
+            padding: '1rem', 
+            borderBottom: '1px solid rgba(232, 180, 184, 0.2)',
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <LanguageToggle />
+          </div>
+          
           {navItems.map((item) => (
             <a
               key={item.id}
