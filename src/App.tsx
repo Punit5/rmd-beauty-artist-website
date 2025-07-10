@@ -1,5 +1,6 @@
 import React from 'react';
 import { trackFormSubmission, trackPhoneCall, trackEmailClick, trackBookingClick } from './utils/analytics';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import EnhancedNavigation from './components/EnhancedNavigation';
 import EnhancedHero from './components/EnhancedHero';
 import EnhancedPortfolio from './components/EnhancedPortfolio';
@@ -7,7 +8,9 @@ import EnhancedServices from './components/EnhancedServices';
 import EnhancedAbout from './components/EnhancedAbout';
 import EnhancedTestimonials from './components/EnhancedTestimonials';
 
-function App() {
+const AppContent: React.FC = () => {
+  const { t } = useLanguage();
+  
   const appStyle: React.CSSProperties = {
     fontFamily: 'Inter, sans-serif',
     margin: 0,
@@ -36,41 +39,41 @@ function App() {
       <section id="contact" style={{ padding: '5rem 1rem', backgroundColor: 'rgba(255, 255, 255, 0.9)', position: 'relative', zIndex: 10, backdropFilter: 'blur(5px)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{ fontSize: '2.5rem', fontFamily: 'Playfair Display, serif', fontWeight: 700, textAlign: 'center', marginBottom: '1rem', color: '#333' }}>
-            Let's Create Something Beautiful
+            {t.contact.title}
           </h2>
           <p style={{ fontSize: '1.1rem', color: '#666', textAlign: 'center', marginBottom: '3rem', maxWidth: '600px', margin: '0 auto 3rem auto' }}>
-            Ready to discuss your special event? I'd love to hear about your vision and how I can help make it a reality.
+            {t.contact.subtitle}
           </p>
           
           <div className="responsive-grid-2" style={{ gap: '3rem' }}>
             <div style={{ backgroundColor: '#fff', padding: '2rem', borderRadius: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
               <h3 style={{ fontSize: '1.5rem', fontFamily: 'Playfair Display, serif', marginBottom: '1.5rem', color: '#333' }}>
-                Get In Touch
+                {t.contact.getInTouch}
               </h3>
               <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <input
                   type="text"
-                  placeholder="Your Name"
+                  placeholder={t.contact.form.name}
                   style={{ padding: '0.75rem', border: '1px solid #ddd', borderRadius: '4px', fontSize: '1rem' }}
                 />
                 <input
                   type="email"
-                  placeholder="Your Email"
+                  placeholder={t.contact.form.email}
                   style={{ padding: '0.75rem', border: '1px solid #ddd', borderRadius: '4px', fontSize: '1rem' }}
                 />
                 <input
                   type="tel"
-                  placeholder="Phone Number"
+                  placeholder={t.contact.form.phone}
                   style={{ padding: '0.75rem', border: '1px solid #ddd', borderRadius: '4px', fontSize: '1rem' }}
                 />
                 <select style={{ padding: '0.75rem', border: '1px solid #ddd', borderRadius: '4px', fontSize: '1rem' }}>
-                  <option value="">Select Event Type</option>
-                  <option value="wedding">Wedding</option>
-                  <option value="photoshoot">Photoshoot</option>
-                  <option value="special-event">Special Event</option>
+                  <option value="">{t.contact.form.eventTypes.select}</option>
+                  <option value="wedding">{t.contact.form.eventTypes.wedding}</option>
+                  <option value="photoshoot">{t.contact.form.eventTypes.photoshoot}</option>
+                  <option value="special-event">{t.contact.form.eventTypes.specialEvent}</option>
                 </select>
                 <textarea
-                  placeholder="Tell me about your event and vision..."
+                  placeholder={t.contact.form.messagePlaceholder}
                   rows={4}
                   style={{ padding: '0.75rem', border: '1px solid #ddd', borderRadius: '4px', fontSize: '1rem', resize: 'vertical' }}
                 />
@@ -79,7 +82,7 @@ function App() {
                   style={{ padding: '0.75rem', backgroundColor: '#E8B4B8', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 500, fontSize: '1rem' }}
                   onClick={() => trackFormSubmission('contact_form')}
                 >
-                  Send Message
+                  {t.contact.form.sendMessage}
                 </button>
               </form>
             </div>
@@ -222,6 +225,14 @@ function App() {
         <span style={{ fontSize: '8px', marginTop: '1px' }}>Book Now</span>
       </button>
     </div>
+  );
+};
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }
 

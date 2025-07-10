@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const EnhancedAbout: React.FC = () => {
+  const { t } = useLanguage();
   const [isIntersecting, setIsIntersecting] = useState(false);
   const aboutRef = useRef<HTMLDivElement>(null);
 
@@ -92,7 +94,7 @@ const EnhancedAbout: React.FC = () => {
               marginBottom: '1rem',
               color: '#333',
             }}>
-              Meet Ria
+              {t.about.title}
             </h2>
             
             <p style={{
@@ -102,7 +104,7 @@ const EnhancedAbout: React.FC = () => {
               marginBottom: '2rem',
               fontFamily: 'Playfair Display, serif',
             }}>
-              Professional Makeup Artist & Hair Stylist
+              {t.about.subtitle}
             </p>
 
             <div style={{
@@ -111,19 +113,11 @@ const EnhancedAbout: React.FC = () => {
               marginBottom: '3rem',
               fontSize: '1.1rem',
             }}>
-              <p style={{ marginBottom: '1.5rem' }}>
-                With over 8 years of experience in the beauty industry, I've had the privilege 
-                of working with hundreds of brides, models, and clients to create their perfect look. 
-                My passion lies in enhancing natural beauty while ensuring every client feels 
-                confident and radiant.
-              </p>
-
-              <p style={{ marginBottom: '1.5rem' }}>
-                I believe that makeup and hair styling are forms of artistry that should celebrate 
-                individuality. Whether you're preparing for your wedding day, a special event, 
-                or a professional photoshoot, I work closely with you to understand your vision 
-                and bring it to life.
-              </p>
+              {t.about.description.map((paragraph, index) => (
+                <p key={index} style={{ marginBottom: '1.5rem' }}>
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             <div className="responsive-button-group" style={{
@@ -141,7 +135,7 @@ const EnhancedAbout: React.FC = () => {
                 transition: 'all 0.3s ease',
                 boxShadow: '0 4px 15px rgba(232, 180, 184, 0.4)',
               }}>
-                Let's Work Together
+{t.about.workTogether}
               </button>
               
               <button style={{
@@ -155,7 +149,7 @@ const EnhancedAbout: React.FC = () => {
                 fontSize: '1rem',
                 transition: 'all 0.3s ease',
               }}>
-                View Certificates
+{t.about.viewCertificates}
               </button>
             </div>
           </div>
@@ -170,10 +164,10 @@ const EnhancedAbout: React.FC = () => {
           textAlign: 'center',
         }}>
           {[
-            { number: '500+', label: 'Happy Clients', icon: '❤️' },
-            { number: '8+', label: 'Years Experience', icon: '⭐' },
-            { number: '300+', label: 'Weddings', icon: '💍' },
-            { number: '100+', label: 'Photo Shoots', icon: '📸' },
+            { number: '500+', label: t.about.stats.clients, icon: '❤️' },
+            { number: '8+', label: t.about.stats.experience, icon: '⭐' },
+            { number: '300+', label: t.about.stats.weddings, icon: '💍' },
+            { number: '100+', label: t.about.stats.photoShoots, icon: '📸' },
           ].map((stat, index) => (
             <div key={stat.label} style={{
               opacity: isIntersecting ? 1 : 0,

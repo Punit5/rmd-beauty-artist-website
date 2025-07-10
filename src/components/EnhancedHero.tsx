@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const EnhancedHero: React.FC = () => {
+  const { t } = useLanguage();
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -232,12 +234,12 @@ const EnhancedHero: React.FC = () => {
       
       <div style={contentStyle}>
         <h1 style={titleStyle}>
-          Effortless Beauty for Life's Most
-          <span style={subtitleStyle}>Memorable Moments</span>
+          {t.hero.title}
+          <span style={subtitleStyle}>{t.hero.subtitle}</span>
         </h1>
         
         <p style={descriptionStyle}>
-          Professional hair and makeup artistry for weddings, photoshoots, and special events
+          {t.hero.description}
         </p>
         
         <div style={buttonGroupStyle}>
@@ -254,7 +256,7 @@ const EnhancedHero: React.FC = () => {
             }}
           >
             <span>✨</span>
-            View Portfolio
+            {t.hero.viewPortfolio}
           </button>
           <button 
             style={secondaryButtonStyle}
@@ -271,7 +273,7 @@ const EnhancedHero: React.FC = () => {
             }}
           >
             <span>💬</span>
-            Book Consultation
+            {t.hero.bookConsultation}
           </button>
         </div>
       </div>

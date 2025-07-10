@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface Service {
   id: string;
@@ -21,6 +22,7 @@ interface CalculatorState {
 }
 
 const EnhancedServices: React.FC = () => {
+  const { t } = useLanguage();
   const [, setSelectedService] = useState<string>('');
   const [showCalculator, setShowCalculator] = useState(false);
   const [calculatorState, setCalculatorState] = useState<CalculatorState>({
@@ -36,18 +38,11 @@ const EnhancedServices: React.FC = () => {
   const services: Service[] = [
     {
       id: 'bridal-makeup',
-      title: 'Bridal Makeup',
-      description: 'Complete bridal beauty experience for your special day',
+      title: t.services.bridal.title,
+      description: t.services.bridal.description,
       basePrice: 350,
       duration: '3-4 hours',
-      features: [
-        'Bridal consultation & trial',
-        'Wedding day makeup application',
-        'Touch-up kit provided',
-        'Airbrush makeup option',
-        'False lashes included',
-        'Photography-ready finish'
-      ],
+      features: t.services.bridal.features,
       addOns: [
         { name: 'Additional trial session', price: 150 },
         { name: 'Travel fee (outside 20mi)', price: 50 },
@@ -59,18 +54,11 @@ const EnhancedServices: React.FC = () => {
     },
     {
       id: 'hair-styling',
-      title: 'Hair Styling',
-      description: 'Professional hair styling for any occasion',
+      title: t.services.events.title,
+      description: t.services.events.description,
       basePrice: 150,
       duration: '1-2 hours',
-      features: [
-        'Consultation & styling',
-        'Updos & formal styles',
-        'Blow-dry & styling',
-        'Hair accessories placement',
-        'Travel to your location',
-        'Touch-up appointments'
-      ],
+      features: t.services.events.features,
       addOns: [
         { name: 'Hair extensions styling', price: 100 },
         { name: 'Complex braiding work', price: 75 },
@@ -82,18 +70,11 @@ const EnhancedServices: React.FC = () => {
     },
     {
       id: 'special-events',
-      title: 'Special Events',
-      description: 'Glamorous makeup for proms, galas, and special occasions',
+      title: t.services.events.title,
+      description: t.services.events.description,
       basePrice: 125,
       duration: '1-2 hours',
-      features: [
-        'Event makeup consultation',
-        'Custom look creation',
-        'Long-lasting formulas',
-        'Photo-ready application',
-        'Group booking discounts',
-        'On-location service'
-      ],
+      features: t.services.events.features,
       addOns: [
         { name: 'Group rate (3+ people)', price: -25 },
         { name: 'Glitter & special effects', price: 30 },
@@ -105,18 +86,11 @@ const EnhancedServices: React.FC = () => {
     },
     {
       id: 'photoshoot',
-      title: 'Photoshoot Makeup',
-      description: 'Professional makeup for photography and media',
+      title: t.services.photoshoots.title,
+      description: t.services.photoshoots.description,
       basePrice: 200,
       duration: '2-4 hours',
-      features: [
-        'High-definition makeup',
-        'Camera-ready application',
-        'Multiple look changes',
-        'Collaboration with photographers',
-        'Editorial & commercial work',
-        'Retouching consultation'
-      ],
+      features: t.services.photoshoots.features,
       addOns: [
         { name: 'Additional look change', price: 75 },
         { name: 'Body makeup', price: 100 },
@@ -299,10 +273,9 @@ const EnhancedServices: React.FC = () => {
   return (
     <section id="services" ref={servicesRef} style={sectionStyle}>
       <div style={containerStyle}>
-        <h2 style={titleStyle}>Services</h2>
+        <h2 style={titleStyle}>{t.services.title}</h2>
         <p style={subtitleStyle}>
-          Comprehensive beauty services tailored to make you look and feel your absolute best 
-          for every occasion.
+          {t.services.subtitle}
         </p>
 
         <div style={gridStyle}>

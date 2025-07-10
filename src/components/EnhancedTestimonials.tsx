@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface Testimonial {
   id: number;
@@ -11,6 +12,7 @@ interface Testimonial {
 }
 
 const EnhancedTestimonials: React.FC = () => {
+  const { t } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -74,9 +76,9 @@ const EnhancedTestimonials: React.FC = () => {
   ];
 
   const filters = [
-    { id: 'all', name: 'All Reviews', icon: '⭐' },
-    { id: 'bridal', name: 'Bridal', icon: '👰' },
-    { id: 'photoshoot', name: 'Photoshoot', icon: '📸' },
+    { id: 'all', name: t.testimonials.filters.all, icon: '⭐' },
+    { id: 'bridal', name: t.testimonials.filters.bridal, icon: '👰' },
+    { id: 'photoshoot', name: t.testimonials.filters.photoshoot, icon: '📸' },
   ];
 
   const filteredTestimonials = selectedFilter === 'all' 
@@ -182,10 +184,9 @@ const EnhancedTestimonials: React.FC = () => {
   return (
     <section id="testimonials" ref={testimonialsRef} style={sectionStyle}>
       <div style={containerStyle}>
-        <h2 style={titleStyle}>What Clients Say</h2>
+        <h2 style={titleStyle}>{t.testimonials.title}</h2>
         <p style={subtitleStyle}>
-          Don't just take my word for it. Here's what my amazing clients have to say 
-          about their experience working with me.
+          {t.testimonials.subtitle}
         </p>
 
         {/* Filter Buttons */}

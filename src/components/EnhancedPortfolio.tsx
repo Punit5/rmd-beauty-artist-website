@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { trackPortfolioView } from '../utils/analytics';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface ImageData {
   id: number;
@@ -12,6 +13,7 @@ interface ImageData {
 }
 
 const EnhancedPortfolio: React.FC = () => {
+  const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('all');
   const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -122,10 +124,10 @@ const EnhancedPortfolio: React.FC = () => {
   ];
 
   const categories = [
-    { id: 'all', name: 'All Work', icon: '🎨' },
-    { id: 'bridal', name: 'Bridal', icon: '👰' },
-    { id: 'photoshoots', name: 'Photoshoots', icon: '📸' },
-    { id: 'events', name: 'Special Events', icon: '🎉' }
+    { id: 'all', name: t.portfolio.categories.all, icon: '🎨' },
+    { id: 'bridal', name: t.portfolio.categories.bridal, icon: '👰' },
+    { id: 'photoshoots', name: t.portfolio.categories.photoshoots, icon: '📸' },
+    { id: 'events', name: t.portfolio.categories.events, icon: '🎉' }
   ];
 
   useEffect(() => {
@@ -317,7 +319,7 @@ const EnhancedPortfolio: React.FC = () => {
     return (
       <section style={sectionStyle}>
         <div style={containerStyle}>
-          <div style={titleStyle}>Portfolio</div>
+          <div style={titleStyle}>{t.portfolio.title}</div>
           <div style={masonryGridStyle}>
             {Array.from({ length: 6 }).map((_, index) => (
               <div
@@ -338,10 +340,9 @@ const EnhancedPortfolio: React.FC = () => {
   return (
     <section id="portfolio" ref={portfolioRef} style={sectionStyle}>
       <div style={containerStyle}>
-        <h2 style={titleStyle}>Portfolio</h2>
+        <h2 style={titleStyle}>{t.portfolio.title}</h2>
         <p style={subtitleStyle}>
-          Discover my passion for creating timeless beauty through carefully curated work 
-          spanning bridal, editorial, and special event makeup artistry.
+          {t.portfolio.subtitle}
         </p>
 
         {/* Category Filter */}
@@ -472,7 +473,7 @@ const EnhancedPortfolio: React.FC = () => {
               e.currentTarget.style.boxShadow = '0 4px 15px rgba(232, 180, 184, 0.4)';
             }}
           >
-            Load More ✨
+{t.portfolio.loadMore} ✨
           </button>
         )}
 

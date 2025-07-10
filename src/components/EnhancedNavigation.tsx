@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { trackNavigation, trackBookingClick } from '../utils/analytics';
+import { useLanguage } from '../contexts/LanguageContext';
+import LanguageToggle from './LanguageToggle';
 
 const EnhancedNavigation: React.FC = () => {
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
   const navItems = [
-    { id: 'home', name: 'Home', icon: '🏠' },
-    { id: 'portfolio', name: 'Portfolio', icon: '📸' },
-    { id: 'services', name: 'Services', icon: '💼' },
-    { id: 'about', name: 'About', icon: '👩‍🎨' },
-    { id: 'testimonials', name: 'Testimonials', icon: '⭐' },
-    { id: 'contact', name: 'Contact', icon: '📞' },
+    { id: 'home', name: t.nav.home, icon: '🏠' },
+    { id: 'portfolio', name: t.nav.portfolio, icon: '📸' },
+    { id: 'services', name: t.nav.services, icon: '💼' },
+    { id: 'about', name: t.nav.about, icon: '👩‍🎨' },
+    { id: 'testimonials', name: t.nav.testimonials, icon: '⭐' },
+    { id: 'contact', name: t.nav.contact, icon: '📞' },
   ];
 
   useEffect(() => {
@@ -74,15 +77,15 @@ const EnhancedNavigation: React.FC = () => {
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
     width: '100%',
     maxWidth: '1200px',
     margin: '0 auto',
     padding: '0 1rem',
+    minHeight: '70px',
   };
 
   const logoStyle: React.CSSProperties = {
-    fontSize: '1.8rem',
+    fontSize: '1.5rem',
     fontFamily: 'Playfair Display, serif',
     fontWeight: 700,
     color: isScrolled ? '#E8B4B8' : '#fff',
@@ -90,33 +93,36 @@ const EnhancedNavigation: React.FC = () => {
     transition: 'all 0.3s ease',
     display: 'flex',
     alignItems: 'center',
-    gap: '0.5rem',
+    gap: '0.3rem',
+    whiteSpace: 'nowrap',
   };
 
   const desktopNavStyle: React.CSSProperties = {
     display: 'flex',
-    gap: '1.5rem',
+    gap: '0.5rem',
     listStyle: 'none',
     margin: 0,
     padding: 0,
     alignItems: 'center',
     whiteSpace: 'nowrap',
+    flexShrink: 1,
   };
 
   const navLinkStyle: React.CSSProperties = {
     color: isScrolled ? '#333' : '#fff',
     textDecoration: 'none',
     fontWeight: 500,
-    padding: '0.5rem 1rem',
-    borderRadius: '25px',
+    padding: '0.3rem 0.6rem',
+    borderRadius: '20px',
     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
-    gap: '0.5rem',
-    fontSize: '0.9rem',
+    gap: '0.3rem',
+    fontSize: '0.8rem',
     textTransform: 'uppercase',
-    letterSpacing: '0.5px',
+    letterSpacing: '0.3px',
+    whiteSpace: 'nowrap',
   };
 
   const activeNavLinkStyle: React.CSSProperties = {
@@ -211,14 +217,29 @@ const EnhancedNavigation: React.FC = () => {
   return (
     <nav style={navStyle}>
       <div style={containerStyle}>
-        <a href="#home" style={{...logoStyle, flexShrink: 0}} onClick={(e) => { e.preventDefault(); handleLinkClick('home'); }}>
-          <span style={{ fontSize: '1.2rem' }}>✨</span>
-          RMD Studios
-        </a>
+        {/* Logo Section - Fixed width */}
+        <div style={{ 
+          flex: '0 0 160px',
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+          <a href="#home" style={logoStyle} onClick={(e) => { e.preventDefault(); handleLinkClick('home'); }}>
+            <span style={{ fontSize: '1rem' }}>✨</span>
+            RMD Studios
+          </a>
+        </div>
         
-        {/* Desktop Navigation */}
-        <div className="desktop-nav">
-          <ul style={desktopNavStyle}>
+        {/* Center Navigation - Flexible */}
+        <div className="desktop-nav" style={{ 
+          flex: '1 1 auto',
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          gap: '0.5rem',
+          overflow: 'hidden'
+        }}>
+          <LanguageToggle />
+          <ul style={{...desktopNavStyle, margin: 0}}>
             {navItems.map((item) => (
               <li key={item.id}>
                 <a
@@ -238,22 +259,30 @@ const EnhancedNavigation: React.FC = () => {
                     }
                   }}
                 >
-                  <span style={{ fontSize: '1rem' }}>{item.icon}</span>
+                  <span className="nav-icon" style={{ fontSize: '1rem' }}>{item.icon}</span>
                   {item.name}
                 </a>
               </li>
             ))}
           </ul>
-
+        </div>
+        
+        {/* Right Side - Book Button - Fixed width */}
+        <div className="book-button-desktop" style={{ 
+          flex: '0 0 120px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end'
+        }}>
           <button 
           style={{
             ...bookButtonStyle,
             flexDirection: 'row',
-            height: '50px',
-            minWidth: '120px',
-            fontSize: '14px',
-            padding: '8px 16px',
-            gap: '8px'
+            height: '40px',
+            minWidth: '100px',
+            fontSize: '12px',
+            padding: '6px 12px',
+            gap: '6px'
           }}
           onClick={() => {
             trackBookingClick('header_button');
@@ -273,18 +302,18 @@ const EnhancedNavigation: React.FC = () => {
             flexDirection: 'column', 
             alignItems: 'center',
             backgroundColor: 'rgba(255,255,255,0.2)',
-            padding: '4px 6px',
-            borderRadius: '6px',
-            minWidth: '32px'
+            padding: '2px 4px',
+            borderRadius: '4px',
+            minWidth: '24px'
           }}>
-            <div style={{ fontSize: '8px', opacity: 0.9, lineHeight: '1' }}>
+            <div style={{ fontSize: '6px', opacity: 0.9, lineHeight: '1' }}>
               {new Date().toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}
             </div>
-            <div style={{ fontSize: '12px', fontWeight: 'bold', lineHeight: '1' }}>
+            <div style={{ fontSize: '10px', fontWeight: 'bold', lineHeight: '1' }}>
               {new Date().getDate()}
             </div>
           </div>
-          <span>Book Now</span>
+          <span>{t.nav.bookNow}</span>
         </button>
         </div>
 
@@ -352,7 +381,7 @@ const EnhancedNavigation: React.FC = () => {
                   {new Date().getDate()}
                 </div>
               </div>
-              <span>Book Now</span>
+              <span>{t.nav.bookNow}</span>
             </button>
           </div>
         </div>
